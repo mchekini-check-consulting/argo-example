@@ -4,4 +4,4 @@ namespace: default
 
 
 resources:
-  - resources/nginx-pod.yml
+  - resources/nginx-deploy.yml
