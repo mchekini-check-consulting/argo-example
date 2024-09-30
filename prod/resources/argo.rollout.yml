@@ -12,14 +12,34 @@ spec:
       autoPromotionEnabled: true
   selector:
     matchLabels:
-      app: bluegreen-app
+      app: nginx-green
   template:
     metadata:
       labels:
-        app: bluegreen-app
+        app: nginx-green
     spec:
       containers:
-        - name: bluegreen-app
-          image: nginx:1.19.9  # Nouvelle version à déployer
-          ports:
-            - containerPort: 80
+        - name: nginx
+          image: nginx:alpine
+          volumeMounts:
+            - name: html-volume
+              mountPath: /usr/share/nginx/html
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 3
+      volumes:
+        - name: html-volume
+          configMap:
+            name: nginx-green-configmap
