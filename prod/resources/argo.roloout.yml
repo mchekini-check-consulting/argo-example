@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: bluegreen-app
+  namespace: my-app
+spec:
+  replicas: 2
+  strategy:
+    blueGreen:
+      activeService: nginx-blue-service
+      previewService: nginx-green-service
+      autoPromotionEnabled: true
+  selector:
+    matchLabels:
+      app: bluegreen-app
+  template:
+    metadata:
+      labels:
+        app: bluegreen-app
+    spec:
+      containers:
+        - name: bluegreen-app
+          image: nginx:1.19.9  # Nouvelle version à déployer
+          ports:
+            - containerPort: 80
