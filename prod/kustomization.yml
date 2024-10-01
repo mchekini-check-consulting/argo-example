@@ -4,10 +4,8 @@ namespace: default
 
 
 resources:
-  - resources/nginx-blue.configmap.yml
-  - resources/nginx-green.configmap.yml
-  - resources/nginx-blue-pod.yml
-  - resources/nginx-green-pod.yml
-  - resources/blue.service.yml
-  - resources/green.service.yml
+  - resources/configmap/nginx-blue.configmap.yml
+  - resources/configmap/nginx-green.configmap.yml
+  - resources/services/blue.service.yml
+  - resources/services/green.service.yml
   - resources/argo.rollout.yml

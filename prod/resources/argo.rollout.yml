@@ -1,8 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: bluegreen-app
-  namespace: default
+  name: nginx-bluegreen-rollout
 spec:
   replicas: 2
   strategy:
@@ -12,11 +11,12 @@ spec:
       autoPromotionEnabled: true
   selector:
     matchLabels:
-      app: nginx-green
+      app: nginx-bluegreen
   template:
     metadata:
       labels:
-        app: nginx-green
+        app: nginx-bluegreen
+        version: green
     spec:
       containers:
         - name: nginx
