@@ -4,7 +4,7 @@ metadata:
   name: nginx-blue-service
 spec:
   selector:
-    app: nginx-bluegreen
+    app: nginx
     version: blue
   ports:
     - protocol: TCP
