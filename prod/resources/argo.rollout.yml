@@ -4,42 +4,30 @@ metadata:
   name: nginx-bluegreen-rollout
 spec:
   replicas: 2
-  strategy:
-    blueGreen:
-      activeService: nginx-blue-service
-      previewService: nginx-green-service
-      autoPromotionEnabled: true
   selector:
     matchLabels:
-      app: nginx-bluegreen
+      app: nginx
+  strategy:
+    blueGreen:
+      activeService: nginx-blue-service  # Le service actif, ici la version "blue"
+      previewService: nginx-green-service  # Le service en prévisualisation, ici "green"
+      autoPromotionEnabled: true  # Désactivation de la promotion automatique pour que nous décidions manuellement
+      scaleDownDelaySeconds: 30
   template:
     metadata:
       labels:
-        app: nginx-bluegreen
-        version: green
+        app: nginx
+        version: blue  # Le label pour les pods de la version "blue"
     spec:
       containers:
         - name: nginx
-          image: nginx:alpine
+          image: nginx:1.19.0  # Version de l'image Nginx pour la version active (blue)
+          ports:
+            - containerPort: 80
           volumeMounts:
             - name: html-volume
               mountPath: /usr/share/nginx/html
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 80
-            initialDelaySeconds: 30
-            periodSeconds: 5
-            successThreshold: 1
-            failureThreshold: 3
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 80
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            failureThreshold: 3
       volumes:
         - name: html-volume
           configMap:
-            name: nginx-green-configmap
+            name: nginx-blue-configmap
