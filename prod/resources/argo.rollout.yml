@@ -7,6 +7,7 @@ spec:
   selector:
     matchLabels:
       app: nginx
+      version: blue
   strategy:
     blueGreen:
       activeService: nginx-blue-service  # Le service actif, ici la version "blue"
