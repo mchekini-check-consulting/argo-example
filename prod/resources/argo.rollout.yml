@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: bluegreen-app
-  namespace: my-app
+  namespace: default
 spec:
   replicas: 2
   strategy:
