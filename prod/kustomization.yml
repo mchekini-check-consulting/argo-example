@@ -1,7 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: default
-
+namespace: defaul
 
 resources:
   - resources/configmap/nginx-blue.configmap.yml
@@ -10,3 +9,7 @@ resources:
   - resources/services/green.service.yml
   - resources/argo.rollout.yml
   - resources/nginx-pod.yml
+
+
+commonLabels:
+  env: prod
