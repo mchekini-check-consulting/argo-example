@@ -9,3 +9,4 @@ resources:
   - resources/services/blue.service.yml
   - resources/services/green.service.yml
   - resources/argo.rollout.yml
+  - resources/nginx-pod.yml
